@@ -1,0 +1,385 @@
+{%extends 'myapp/aec_base.html' %}
+{% load static %}
+
+{% block content %}
+
+            <div class="layout-page">
+
+                <div class="content-wrapper">
+            
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card">
+                                        <div class="card">
+                                            <div class="card-header border-bottom">
+                                              <h5 class="card-title">TOWNLIST MASTER</h5>
+                                              <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+                                                <div class="col-md-4 user_role"></div>
+                                                <div class="col-md-4 user_plan"></div>
+                                                <div class="col-md-4 user_status"></div>
+                                              </div>
+                                            </div>
+                                            
+                                            <div class="card-datatable text-nowrap">
+                                              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                                <div class="row">
+                                                  <div class="col-sm-12 col-md-6">
+                                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                                      <label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                      </select> entries</label>
+                                                    </div>
+                                                  </div>
+                                                    <div class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                                                      <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                <button class="btn btn-label-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="modal" data-bs-target="#addNewCCModal3">
+                                                  <span>
+                                                    <i class="bx bx-plus me-sm-1">
+
+                                                  </i> 
+                                                  <span class="d-none d-sm-inline-block">Add New Record&nbsp;&nbsp;</span>
+                                                </span></button>&nbsp;&nbsp;
+                                      
+                                             
+                                           </div>
+                                          </div>
+                                          
+                                        <div>     
+                                        <table>
+                                            <div class="card-body">
+                                                <div class="table-responsive text-nowrap">
+                                                    <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                       <th>localbody name</th>
+                                                     
+                                                        <th>Ward No </th>
+                                                        <th>Block No</th>
+                                                        <th>Surveyno From</th>
+                                                        <th>Surveyno To</th>
+                                                        <th>landuse Details</th>
+                                                        <th>Actions</th>
+
+                                                       
+                                             
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-border-bottom-0" id="tableBody" style="max-height: 120px; overflow-y: auto;">
+                                                        <tr >
+                                                      {% for data in obj %} 
+                                                      <td>{{data.localbody_name}}</td>
+                                                     
+                                                      <td>{{data.wardno}}</td>
+                                                      <td>{{data.blockno}}</td>
+                                                      <td>{{data.surveyno_from}} </td>
+                                                      <td>{{data.surveyno_to}}</td>
+                                                      <td>{{data.landuse_type}}</td>
+                                                  
+                                                      <td>
+                                                        <div class="dropdown">
+                                                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                          </button>
+                                                            <div class="dropdown-menu" style="">
+                                                              <a class="dropdown-item" onclick="editTownlist('{{data.townlist_id}}', '{{data.localbody_name}}', '{{data.landuse_type}}','{{data.wardno}}','{{data.blockno}}','{{data.surveyno_from}}','{{data.surveyno_to}}')"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                                <a class="dropdown-item" href="{% url 'delete_townlist' data.townlist_id %}"><i class="bx bx-trash me-1"></i> Delete</a>
+                                                            </div>
+                                                          </div>
+                                                
+                                                        </div>
+                                                      </td>
+                                                     
+                                              
+                                                        </tr>
+                                                      {%endfor%}
+                                                    </tbody>
+                                                    <!-- Add Village survey List -->
+<div class="modal fade" id="addNewCCModal3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3>Add Townlist </h3>
+  
+          </div>
+          <form id="addnewcomponent" class="row g-3" onsubmit="return true">
+            {% csrf_token %}
+     <br>
+              <div class="input-group">
+                <button class="btn btn-outline-primary" type="button">Select LocalBodyName</button>
+       
+                <select type="text"  class="form-control" id="localbody_name" aria-label="Example select with button addon">
+                  <option selected="">Choose...</option>
+                  {% for data in localbody %}
+                    <option value={{data.localbody_id}}>{{data.localbody_name}}</option>                 
+                    {% endfor %}
+                  </select>
+              </div>
+         
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">WardNo</label>
+                <div class="input-group input-group-merge">
+                  <input id="wardno" name="wardno" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off"  required>
+                  <span class="input-group-text cursor-pointer p-1" id="wardno"></span><span class="card-type"></span>
+                </div>
+             
+              <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">BlockNo</label>
+                <div class="input-group input-group-merge">
+                  <input id="blockno" name="blockno" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off"  required>
+                  <span class="input-group-text cursor-pointer p-1" id="blockno"></span><span class="card-type"></span>
+                </div>
+           
+        
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">SurveyNo From</label>
+                <div class="input-group input-group-merge">
+                  <input id="surveyno_from" name="surveyno_from" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off"  required>
+                  <span class="input-group-text cursor-pointer p-1" id="surveyno_from"></span><span class="card-type"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">SurveyNo To</label>
+                <div class="input-group input-group-merge">
+                  <input id="surveyno_to" name="surveyno_to" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off"  >
+                  <span class="input-group-text cursor-pointer p-1" id="surveyno_to"></span><span class="card-type"></span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="input-group">
+              <button class="btn btn-outline-primary" type="button">Select Landuse Details</button>
+     
+              <select type="text"  class="form-control" id="landuse_type" aria-label="Example select with button addon">
+                <option selected="">Choose...</option>
+                {% for data in landuse %}
+                  <option value={{data.landuse_id}}>{{data.landuse_type}}</option>                 
+                  {% endfor %}
+                </select>
+            </div> 
+            <br>
+            <div class="col-12 text-center mt-4">
+              <button type="submit" class="btn btn-primary me-sm-3 me-1">Save</button>
+              <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit LocalBody List-->
+ <div class="modal fade" id="addNewCCModal1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+      <div class="modal-content p-3 p-md-5">
+      
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3>Edit Townlist</h3>
+  
+          </div>
+          <form id="addnewcomponent1" class="row g-3" onsubmit="return false">
+            {% csrf_token %}
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Village Name</label>
+              <div class="input-group input-group-merge">
+                <input id="localbody_name-modal" name="localbody_name" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off" required >
+                <span class="input-group-text cursor-pointer p-1" id="localbody_name"></span><span class="card-type"></span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">WardNo</label>
+                <div class="input-group input-group-merge">
+                  <input id="wardno-modal" name="wardno" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off"  required>
+                  <span class="input-group-text cursor-pointer p-1" id="wardno"></span><span class="card-type"></span>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">BlockNo</label>
+                <div class="input-group input-group-merge">
+                  <input id="blockno-modal" name="blockno" class="form-control credit-card-mask" type="text"
+                    aria-describedby="modalAddCard2" autocomplete="off" required >
+                  <span class="input-group-text cursor-pointer p-1" id="blockno"></span><span class="card-type"></span>
+                </div>
+              </div>
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Surveyno From</label>
+              <div class="input-group input-group-merge">
+                <input id="surveyno_from-modal" name="surveyno_from" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off" required >
+                <span class="input-group-text cursor-pointer p-1" id="landuse_type"></span><span class="card-type"></span>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Surveyno To</label>
+              <div class="input-group input-group-merge">
+                <input id="surveyno_to-modal" name="surveyno_to" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off"  >
+                <span class="input-group-text cursor-pointer p-1" id="polygon_colour"></span><span class="card-type"></span>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">LAnduse Type</label>
+              <div class="input-group input-group-merge">
+                <input id="landuse_type-modal" name="landuse_type" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off" required >
+                <span class="input-group-text cursor-pointer p-1" id="landuse_type"></span><span class="card-type"></span>
+              </div>
+            </div>
+   
+            <div class="form-group">
+                <label for="townlist_id"></label>
+                <input type="hidden" id="townlist_id-modal" name="townlist_id" class="form-control" required>
+              </div>
+          <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-primary me-sm-3 me-1">Save</button>
+            <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    function editTownlist(townlist_id, localbody_name, landuse_type,wardno,blockno,surveyno_from,surveyno_to){
+        $('#addNewCCModal1').modal("show");
+        $("#localbody_name-modal").val(localbody_name);
+        $("#landuse_type-modal").val(landuse_type);
+        $("#wardno-modal").val(wardno);
+        $("#blockno-modal").val(blockno);
+        $("#surveyno_from-modal").val(surveyno_from);
+        $("#surveyno_to-modal").val(surveyno_to);
+        $("#townlist_id-modal").val(townlist_id);
+        console.log(townlist_id,localbody_name,landuse_type,wardno,blockno,surveyno_from,surveyno_to)
+        $('form#addnewcomponent1').submit(function (e) {
+          e.preventDefault();
+          console.log(" call8ng addnewcomponent")
+          var empty = true;   
+          var localbody_name = $('#localbody_name-modal').val();
+          console.log("localbody_name",localbody_name)
+          var landuse_type = $('#landuse_type-modal').val();
+          console.log("landuse_type",landuse_type)
+          var wardno = $('#wardno-modal').val();
+          console.log("wardno",wardno)
+          var blockno = $('#blockno-modal').val();
+          console.log("blockno",blockno)
+          var surveyno_from = $('#surveyno_from-modal').val();
+          console.log("surveyno_from",surveyno_from)
+          var surveyno_to = $('#surveyno_to-modal').val();
+          var townlist_id = $('#townlist_id-modal').val();
+          console.log("townlist_id",townlist_id)
+        $.ajax({
+          
+          url: '/edit_townlist/' + townlist_id + '/',  
+          method: 'post',
+          data: {
+            townlist_id:townlist_id,
+              localbody_name: localbody_name,
+              landuse_type: landuse_type,
+              wardno:wardno,
+              blockno:blockno,
+              surveyno_from:surveyno_from,
+              surveyno_to: surveyno_to,
+             
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+        dataType: 'json',
+        success: function (data) {
+            if (data.status) {
+                sweet_alert_message('success', data.message);
+            }  else {
+              sweet_alert_message('success', data.message);
+              setTimeout(function() {
+                window.location.reload();
+              }, 1000); 
+            }
+        }
+      })
+    })
+  }
+  function sweet_alert_message(icons, message) {
+    if (icons == "success") {
+      title1 = "Good job!"
+    } else if (icons == "info") {
+      title1 == "Info!"
+    } else if (icons == "warning") {
+      title1 = "Warning!"
+    } else {
+      title1 = "Error!"
+    }
+    Swal.fire({
+      title: title1,
+      text: message,
+      icon: icons,
+      customClass: {
+        confirmButton: 'btn btn-primary'
+      },
+      buttonsStyling: false
+    });
+   }
+
+
+   $('#addnewcomponent').submit(function(event) {
+    event.preventDefault();
+    var localbody_name = $('#localbody_name').val(); 
+    console.log("add-field-form-localbody_name" ,localbody_name)
+    var landuse_type = $('#landuse_type').val();
+    console.log("add-field-form-landuse_type",landuse_type)
+    var wardno = $('#wardno').val();
+    console.log("wardno",wardno)
+    var blockno = $('#blockno').val();
+    console.log("blockno",blockno)
+    var surveyno_from = $('#surveyno_from').val();
+    var surveyno_to = $('#surveyno_to').val();
+    console.log("add-field-form - data",localbody_name,landuse_type,wardno,blockno,surveyno_from,surveyno_to);
+    
+    $.ajax({
+        type: 'POST',
+        url: '/add_townlist/', 
+        data: {
+            'localbody_name': localbody_name,
+            'landuse_type': landuse_type,
+            'wardno':wardno,
+            'blockno':blockno,
+            'surveyno_from':surveyno_from,
+           'surveyno_to':surveyno_to, 
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+             
+        success: function (data) {
+      if (data.status) {
+
+      sweet_alert_message('success', data.message);
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000); 
+      
+      
+    }  else {
+      sweet_alert_message('success', data.message);
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000); 
+    }
+    }
+    });
+});
+</script>
+{% endblock %}

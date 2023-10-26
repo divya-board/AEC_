@@ -1,0 +1,53 @@
+
+
+
+<li class="menu-item">
+    <a href="javascript:void(0)" class="menu-link">
+      <div data-i18n="District">District</div>
+    </a>
+ 
+    <ul class="menu-sub" id="district-list">
+      <!-- District data will be displayed here dynamically -->
+    </ul>
+ </li>
+
+
+ <script>
+    const districtList = document.getElementById('district-list');
+    const districtURL = "{% url 'get_district_data' %}";
+
+    document.querySelector('.menu-link').addEventListener('click', () => {
+        fetch(districtURL)
+            .then(response => response.json())
+            .then(data => {
+                // Clear the existing list
+                districtList.innerHTML = '';
+
+                // Populate the submenu with district data
+                data.forEach(district => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'menu-item';
+                    listItem.innerHTML = `<a href="#">${district.name}</a>`;
+                    districtList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching district data:', error);
+            });
+    });
+</script>
+
+[
+    path('district/<slug:slug>/', views.show_districts, name='show_districts'),
+]
+
+
+<ul>
+    {% for district in districts %}
+        <li>
+            <a href="{% url 'show_districts' slug=district.slug %}">
+                {{ district.district }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

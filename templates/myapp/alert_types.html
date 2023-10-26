@@ -1,0 +1,17 @@
+{% if type == "success" %}
+<div class="alert alert-solid-success" id ="alert-tag" role="alert">
+    {{message}}
+</div>
+{% elif type == "info" %}
+<div class="alert alert-solid-info"  id ="alert-tag" role="alert">
+  {{message}}
+</div>
+{% elif type == "warning" %}
+<div class="alert alert-solid-warning"  id ="alert-tag" role="alert">
+  {{message}}
+</div>
+{% elif type == "error" %}
+<div class="alert alert-solid-danger"  id ="alert-tag" role="alert">
+  {{message}}
+</div>
+{% endif %}

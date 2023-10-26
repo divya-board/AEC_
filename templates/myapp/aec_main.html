@@ -1,0 +1,758 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+  <html
+    lang="en"
+    class="light-style layout-navbar-fixed layout-menu-fixed"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="{% static 'assets/' %}"
+    data-template="vertical-menu-template-no-customizer"
+  >
+  <head>
+    <meta charset="utf-8"/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>
+      {% block title %}
+   cos Ai
+      {% endblock %}
+    </title>
+   
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/vendor/libs/aec-source/cosai.png' %}" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/leaflet/leaflet.css' %}" />
+     <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    /> 
+    <!-- Google Fonts -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/boxicons.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/flag-icons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/rtl/core.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/rtl/theme-default.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+
+    <!-- Vendors CSS fixed datatable -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css' %}" />
+
+    <!-- Vendors CSS sweet alert -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+     
+    <!-- report generation junior -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/report-gen/report-gen.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/report-gen/report-gen2.css' %}" />
+    
+
+    {% block stylesheet  %}
+    <style>
+      .btn-yellow {
+          width: 100%;         /* Take the full width of its container */
+          max-width: 510px;    /* But never exceed 450px */
+          background-color: #FFFF7D;
+          border-color: #FFFF7D;
+          color: #000;         /* Setting text color to black for better readability */
+      }
+
+      .btn-yellow:hover {
+        background-color: yellow !important;
+        border-color: yellow!important;
+        color: black !important;         /* Assuming you want white text on red background */
+    }
+
+    
+  </style>
+  
+    
+    {% endblock %}
+ 
+    <!-- Page CSS -->
+    <!-- <script>
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkRqO0KsS8Y36e81KV0EZJYCPLpqEsvWA",
+        v: "weekly",
+        
+      });
+    </script> -->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkRqO0KsS8Y36e81KV0EZJYCPLpqEsvWA&callback=initMap">
+</script>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Helpers -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    <script src = "{% static 'assets/vendor/libs/report-gen/jquery.js' %}"></script>
+   
+    <!-- html starter -->
+   <!-- Add this to your base.html or wherever you include CSS and JS files -->
+
+
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+      <div class="layout-container">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+          <div class="container-xxl">
+            <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+           
+                <span class="app-brand-logo demo">
+                  <svg
+                    width="26px"
+                    height="26px"
+                    viewBox="0 0 26 26"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>icon</title>
+                    <defs>
+                      <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                        <stop stop-color="#5A8DEE" offset="0%"></stop>
+                        <stop stop-color="#699AF9" offset="100%"></stop>
+                      </linearGradient>
+                      <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-2">
+                        <stop stop-color="#FDAC41" offset="0%"></stop>
+                        <stop stop-color="#E38100" offset="100%"></stop>
+                      </linearGradient>
+                    </defs>
+                    
+                  </svg>
+                </span>
+                <span class="app-brand-logo demo">
+                  <img src="{% static 'assets/vendor/libs/aec-source/cossvg.svg' %}" class="navbar-logo" alt="logo" width="28px" height="32px" >
+                </span>
+                <span class="app-brand-text demo menu-text fw-bold">COSAI</span>
+               
+                
+              <!-- </a>
+              <img class="logo cos-logo" alt="Coslogo" src="{% static 'assets/vendor/libs/aec-source/cosai.png' %}" /> -->
+              <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
+                <i class="bx bx-x bx-sm align-middle"></i>
+              </a>
+            </div>
+
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              
+
+            </div>
+          
+
+            <!-- Search Small Screens -->
+            <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+              <input
+                type="text"
+                class="form-control search-input border-0"
+                placeholder="Search..."
+                aria-label="Search..." />
+              <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
+            </div>
+          </div>
+        </nav>
+
+         <!-- / Navbar -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0">
+              <div class="container-xxl d-flex h-100">
+                <ul class="menu-inner">
+                  <!-- Home -->
+                  <li class="menu-item active">
+                    <a href="{% url 'aec-main' %}" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                      <div data-i18n="Home">Home</div>
+                    </a>
+ 
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                
+                      <div data-i18n="Services">Master Screen</div>
+                    </a>
+                    
+                    <ul class="menu-sub">
+                    
+                      <li class="menu-item">
+                        
+                    
+               
+                          <a href="{% url 'country_databases' %}" class="menu-link">
+                          <div data-i18n="District">Country Master</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'state_databases' %}" class="menu-link">
+                         
+                          <div data-i18n="District">State Master</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'district_databases' %}" class="menu-link">
+                          <div data-i18n="District">District Master</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'aec_masterdata' %}" class="menu-link">
+                          
+                          <div data-i18n="District">Master Plan</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'aec_localbodydata' %}" class="menu-link">
+                          <div data-i18n="District">LocalBody Master</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'aec_talukdata' %}" class="menu-link">
+                          <div data-i18n="District">Taluk Master</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{% url 'aec_villagedata' %}" class="menu-link">
+                          <div data-i18n="District">Village Master</div>
+                        </a>
+                      </li>
+                    <li class="menu-item">
+                      <a href="{% url 'aec_landusedata' %}" class="menu-link">
+                        <div data-i18n="District">Land Use</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="{% url 'aec_villagesurverylist' %}" class="menu-link">
+                        <div data-i18n="Villagesurvery">Villagesurvey Master</div>
+                      </a>
+                    </li>
+                     <li class="menu-item">
+                      <a href="{% url 'aec_townlist' %}" class="menu-link">
+                        <div data-i18n="Townlist">Townlist Master</div>
+                      </a> 
+                    </li>
+                      </ul>
+                    <!-- district view-->
+
+                    <li class="menu-item">
+                      <a href="javascript:void(0)" class="menu-link menu-toggle" id="district-menu">
+                         <i class="menu-icon tf-icons bx bx-layout"></i>
+                         <div data-i18n="District">District</div>
+                      </a>
+                      <ul class="menu-sub" id="district-submenu"></ul>
+                      <ul class="menu-sub" id="masterplan-submenu"></ul>
+                  </li> 
+         
+            
+                  <!-- Services -->
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                      <i class="menu-icon tf-icons bx bx-layout"></i>
+                      <div data-i18n="Services">Services</div>
+                    </a>
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="aec_reg.html" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-menu"></i>
+                          <div data-i18n="District">Site Feasibility</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="aec_reg.html" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-menu"></i>
+                          <div data-i18n="District">Building Feasibility</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="aec_reg.html" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-menu"></i>
+                          <div data-i18n="District">Financial Feasibility</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="aec_reg.html" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-menu"></i>
+                          <div data-i18n="District">Architectural Feasibility</div>
+                        </a>
+                      </li>
+                      </ul>
+
+              <!-- Pricing -->
+                       <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link menu-toggle">
+                          <i class="menu-icon tf-icons bx bx-diamond"></i>
+                          <div data-i18n="Services">Pricing</div>
+                        </a>
+                        <ul class="menu-sub">
+                          <li class="menu-item">
+                            <a href="aec_reg.html" class="menu-link">
+                              <i class="menu-icon tf-icons bx bx-menu"></i>
+                              <div data-i18n="District">Site Feasibility</div>
+                            </a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="aec_reg.html" class="menu-link">
+                              <i class="menu-icon tf-icons bx bx-menu"></i>
+                              <div data-i18n="District">Building Feasibility</div>
+                            </a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="aec_reg.html" class="menu-link">
+                              <i class="menu-icon tf-icons bx bx-menu"></i>
+                              <div data-i18n="District">Financial Feasibility</div>
+                            </a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="aec_reg.html" class="menu-link">
+                              <i class="menu-icon tf-icons bx bx-menu"></i>
+                              <div data-i18n="District">Architectural Feasibility</div>
+                            </a>
+                          </li>
+                          </ul>
+     
+     <!-- Product -->
+        
+        <li class="menu-item">
+          <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="icon-item fab fa-paypal" ></i>
+            <div data-i18n="Product">&nbsp;Product</div>
+          </a>
+
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="aec_reg.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="List of Master Plans">TNCDPR</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Product -->
+        <!-- List of Master Plans -->
+        <li class="menu-item">
+          <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="icon-item fas fa-pen-to-square"></i>
+            <div data-i18n="Product"> &nbsp;Sample Drawings</div>
+          </a>
+
+        </li>
+
+        <!-- List of Master Plans -->
+        <li class="menu-item">
+          <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="icon-item far fa-address-card" ></i>
+            <div data-i18n="Product">&nbsp;About Us</div>
+          </a>
+        </li>
+        
+        <!-- List of Master Plans -->
+        <li class="menu-item">
+          
+          <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="icon-item fas fa-phone"></i>
+            <div data-i18n="Product"> &nbsp;Contact Us</div>
+          </a>
+        </li>
+
+       
+          <!-- List of Master Plans -->
+          <li class="menu-item">
+            
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="icon-item fas fa-user"></i>
+              <div data-i18n="Product">&nbsp;Register/Login</div>
+         
+            </a>           
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{% url 'login' %}" class="menu-link">
+                  <i class="icon-item fas fa-Login"></i>
+                  <div data-i18n="Login">Login</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="{% url 'aec-register' %}" class="menu-link">
+                  <i class="icon-item fas fa-registered"></i>
+                  <div data-i18n="Register"> &nbsp;Register</div>
+                </a>
+            
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'logout-request' %}" class="menu-link">
+                    <i class="bx bx-power-off me-2"></i>
+                    <div data-i18n="Register"> &nbsp;Logout</div>
+                  </a>
+                </li>   
+    </aside>
+
+
+    
+    <script>
+      $(document).ready(function () {
+        $('#district-menu').click(function () {
+          console.log("inside district menu click function");
+    
+          $.ajax({
+            url: '/get_district/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+              updateDistrictSubmenu(data);
+              console.log("data received", data);
+            },
+            error: function (error) {
+              console.log('Error:', error);
+            }
+          });
+        })
+      // Function to update the district submenu
+      function updateDistrictSubmenu(data) {
+        console.log("inside updateDistrictSubmenu");
+
+        var districtSubmenu = $('#district-submenu');
+
+        districtSubmenu.empty();  // Clear existing district submenu items
+
+        for (var i = 0; i < data.length; i++) {
+          var district_id = data[i].district_id;
+          console.log("district_id", district_id);
+          var district = data[i].district;
+          console.log("district", district);
+          var districtIdInput = $('<input type="hidden" name="district_id" value="' + district_id + '">');
+          var districtItem = $('<li class="menu-item"><a href="javascript:void(0)" class="menu-link"><i class="icon-item fas fa-location-dot">&nbsp;&nbsp;</i><div data-i18n="District1">' + district + '</div></a></li>');
+
+          districtSubmenu.append(districtIdInput).append(districtItem);
+
+          // Add a data attribute to the districtItem to store the district_id
+          districtItem.attr('data-district-id', district_id);
+        }
+
+  // Click event for district items
+        districtSubmenu.on('click', '.menu-item', function () {
+          var district_id = $(this).data('district-id');
+          console.log("District item clicked - ID: " + district_id);
+
+          // Use AJAX to get the respective master plan based on district_id
+          $.ajax({
+            url: '/get_masterplan/' + district_id + '/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (masterPlan) {
+              console.log("Master plan received:", masterPlan);
+              
+              const resultArray = [].concat(masterPlan);
+
+              console.log('resultArray',resultArray[0]);    
+
+              // Call the function to update the master plan submenu
+              updateMasterPlanSubmenu(resultArray[0]);
+              
+            },
+            error: function (error) {
+              console.log('Error:', error);
+            }
+          });
+        });
+
+        // Function to update the master plan submenu
+        function updateMasterPlanSubmenu(masterPlan) {
+          console.log("inside updateMasterPlanSubmenu",masterPlan);
+          var masterPlanSubmenu = $('#masterplan-submenu');
+          masterPlanSubmenu.empty();  // Clear existing master plan submenu items
+          console.log("inside masterplan",masterPlan)
+          
+          const flatArray = masterPlan.masterplan_name.reduce((accumulator, currentArray) => {
+            return accumulator.concat(currentArray);
+          }, []);
+          
+          console.log("flatArray",flatArray,flatArray.length);
+          
+         
+          for (var i = 0; i < flatArray.length; i++) {
+            console.log("=================inside loop",flatArray[i])
+            
+            var masterplanItem = $('<li class="menu-item"><a href="javascript:void(0)" class="menu-link">' + flatArray[i] + '</a></li>');
+            masterPlanSubmenu.append(masterplanItem);
+          }
+        }
+}
+
+     });
+
+
+ 
+    
+    </script>
+    
+    
+        <!-- / Navbar -->
+       
+        <div class="layout-page">
+
+          <div class="content-wrapper">
+      
+              <div class="container-xxl flex-grow-1 container-p-y">
+      
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="card mb-4">
+                              <h5 class="card-header">Map</h5>
+                              <div class="card-body" style="height: 670px;">
+                                  <div class="row" style="height: 100%;">
+                                      <div class="col-md-7 ">
+                                          <div class="leaflet-map" id="basicMap" style="height: 100%; border-right: 1px solid #e0e0e0; overflow: auto;">
+                                              <!-- Your map content goes here -->
+                                          </div>
+                                      </div>
+                                      <div class="col-md-5" style="height: 100%;"> 
+                                             <!-- tabs -->
+                                              <div class="nav-align-top mb-4 style="height: 100%;  ">
+                                                <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                  <li class="nav-item">
+                                                    <button
+                                                      type="button"
+                                                      class="nav-link active"
+                                                      role="tab"
+                                                      data-bs-toggle="tab"
+                                                      data-bs-target="#navs-justified-home"
+                                                      aria-controls="navs-justified-home"
+                                                      aria-selected="true">
+                                                       Home
+                                                    </button>
+                                                  </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                  <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
+                                                    
+                                                    <div class="demo-inline-spacing">
+
+                                                      <!-- First Dropdown with label -->
+                                                      <div>
+                                                          <label for="dropdown1">District:</label>
+                                                          <div class="btn-group" style="display: block;" id="dropdown1">
+                                                              <button type="button" class="btn btn-yellow btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                  Select
+                                                              </button>
+                                                              <ul class="dropdown-menu">
+                                                                  <li>
+                                                                      <h6 class="dropdown-header">District names</h6>
+                                                                  </li>
+                                                                  <li><a class="dropdown-item" href="javascript:void(0);">Madurai</a></li>
+                                                                 
+                                                              </ul>
+                                                          </div>
+                                                      </div
+                                                  
+                                                      <!-- Second Dropdown with label -->
+                                                      <div>
+                                                          <label for="dropdown2">Master plan:</label>
+                                                          <div class="btn-group" style="display: block;" id="dropdown2">
+                                                              <button type="button" class="btn btn-yellow btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                  Select
+                                                              </button>
+                                                              <ul class="dropdown-menu">
+                                                                  <li>
+                                                                      <h6 class="dropdown-header">MP's</h6>
+                                                                  </li>
+                                                                  <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                                                                  
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      <div class="d-flex justify-content-start align-items-center" style="margin-top: 30px !important;" >
+                                                        <div class="form-check" style="margin-right: 30px;"> <!-- Added inline style for margin -->
+                                                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                          <label class="form-check-label" for="flexRadioDefault1">
+                                                            Village
+                                                          </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                          <label class="form-check-label" for="flexRadioDefault2">
+                                                            Town
+                                                          </label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                  
+                                                      <!-- Third Dropdown with label -->
+                                                      
+                                                     
+                                                
+                                                
+                                                  
+                                                  </div>
+                                                  
+                                                  </div>
+                                                  <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
+                                                    <div class="demo-inline-spacing">
+
+                                                      <!-- First Dropdown with label -->
+                                                   
+                                                      
+                                                  
+                                                      <!-- Second Dropdown with label -->
+                                                    
+                                                  
+                                                      <!-- Third Dropdown with label -->
+                                                    
+                                                  
+                                                  </div>
+                                                  
+                                                  </div>
+                                                  <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
+                                                    <div class="demo-inline-spacing">
+
+                                                      <!-- First Dropdown with label -->
+                                                      
+                                                  
+                                                      <!-- Second Dropdown with label -->
+                                                     
+                                                  
+                                                      <!-- Third Dropdown with label -->
+                                                   
+                                                  
+                                                  </div>
+                                                  
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <!-- tabs end -->
+                                            
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="content-backdrop fade"></div>
+              </div>
+      
+          </div>
+      
+      </div>
+      
+    </div>
+ 
+    <script>
+    let map;
+
+async function initMap() {
+  const { Map } = await google.maps.importLibrary("maps");
+
+  map = new Map(document.getElementById("basicMap"), {
+    center: { lat: 9.9252, lng: 78.1198},
+    zoom: 13,
+  });
+}
+
+initMap();
+    </script>
+    
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"> </script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/libs/hammer/hammer.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/libs/i18n/i18n.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'assets/js/app-access-roles.js' %}"></script>
+    <script src="{% static 'assets/js/modal-add-role.js' %}"></script>
+  </body>
+  </html>
+    
+
+  <!-- <div class="col-5">
+    <div class="card mb-4">
+      <h5 class="card-header">info</h5>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <div class="card-body">
+        <div class="leaflet-map" >
+
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+
+
+
+

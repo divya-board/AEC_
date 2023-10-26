@@ -1,0 +1,334 @@
+{%extends 'myapp/aec_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="layout-page">
+
+    <div class="content-wrapper">
+
+        <div class="container-xxl flex-grow-1 container-p-y" >
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                  <h5 class="card-title">VillageSurvery Master</h5>
+                                  
+                                  <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+                                    <div class="col-md-4 user_role"></div>
+                                    <div class="col-md-4 user_plan"></div>
+                                    <div class="col-md-4 user_status"></div>
+                                    
+                                  </div>
+                                </div>
+                            <div class="card-datatable text-nowrap">
+                              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                      <label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
+                                        <option value="10">10</option><option value="25">25</option>
+                                        <option value="50">50</option><option value="100">100</option>
+                                      </select>
+                                       entries
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                      
+                                      <button class="btn btn-label-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button"  data-bs-toggle="modal" data-bs-target="#addNewCCModal3"> 
+                                        <span>
+                                          <i class="bx bx-plus me-sm-1"></i> 
+                                          <span class="d-none d-sm-inline-block">Add New Record&nbsp;&nbsp;</span>
+                                      </span></button>&nbsp;&nbsp;
+                                    </div>
+                                  </div>
+                            </div>
+                           </div>
+                        <div>         
+               <table>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                        <th>Village Name</th>
+                        
+                        <th>surveyno from</th>
+                        <th>surveyno to</th>    
+                        <th>landuse detail</th>                   
+                        <th>ACtions</th>
+                        </tr>
+                    </thead>
+                    
+                      <tbody class="table-border-bottom-0" id="tableBody" style="max-height: 120px; overflow-y: auto;">
+                        <tr >
+                      {% for data in obj %} 
+                      <td value={{data.village_name}} >{{data.village_name}} </td>
+                    
+                      <td value={{data.villagesurvey_id}}>{{data.surveyno_from}}</td>
+                      <td value={{data.villagesurvey_id}}>{{data.surveyno_to}}</td>
+                      <td value={{data.landuse_id}}>{{data.landuse_type}}</td>
+                      <td>
+                        <div class="dropdown">
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                            <div class="dropdown-menu" style="">
+                              <a class="dropdown-item" onclick="editVillageasurvery('{{data.villagesurvey_id}}', '{{data.village_name}}', '{{data.landuse_type}}','{{data.surveyno_from}}','{{data.surveyno_to}}')"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                              <a class="dropdown-item" href="{% url 'delete_villagesurvey' data.villagesurvey_id %}"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                          </div>
+                
+                        </div>
+                      </td>
+                      </tr>
+                      {%endfor%}
+                   
+                    </tbody>
+                  </table>
+                   <!-- Add Village survey List -->
+<div class="modal fade" id="addNewCCModal3" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="text-center mb-4">
+          <h3>Add VillageSurvey </h3>
+
+        </div>
+        <form id="addnewcomponent" class="row g-3" onsubmit="return true">
+          {% csrf_token %}
+   
+            <div class="input-group">
+              <button class="btn btn-outline-primary" type="button">Select Village &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+     
+              <select type="text"  class="form-control" id="village_name" aria-label="Example select with button addon">
+                <option selected="">Choose...</option>
+                {% for data in village_name %}
+                  <option value={{data.village_id}}>{{data.village_name}}</option>                 
+                  {% endfor %}
+                </select>
+            </div>
+          
+           
+          <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Surveyno From</label>
+              <div class="input-group input-group-merge">
+                <input id="surveyno_from" name="surveyno_from" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off" required >
+                <span class="input-group-text cursor-pointer p-1" id="surveyno_from"></span><span class="card-type"></span>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Surveyno To</label>
+              <div class="input-group input-group-merge">
+                <input id="surveyno_to" name="surveyno_to" class="form-control credit-card-mask" type="text"
+                  aria-describedby="modalAddCard2" autocomplete="off"  >
+                <span class="input-group-text cursor-pointer p-1" id="surveyno_to"></span><span class="card-type"></span>
+              </div>
+            </div>
+              <div class="input-group">
+                <button class="btn btn-outline-primary" type="button">Select Landuse &nbsp;&nbsp;&nbsp;</button>
+       
+                <select type="text"  class="form-control" id="landuse_type" aria-label="Example select with button addon">
+                  <option selected="">Choose...</option>
+                  {% for data in landuse %}
+                    <option value={{data.landuse_id}}>{{data.landuse_type}}</option>                 
+                    {% endfor %}
+                  </select>
+              </div>
+          
+          </div>
+          <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-primary me-sm-3 me-1">Save</button>
+            <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Edit LocalBody List-->
+ <div class="modal fade" id="addNewCCModal1" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+    <div class="modal-content p-3 p-md-5">
+    
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="text-center mb-4">
+          <h3>Edit VillageSurvey</h3>
+
+        </div>
+        <form id="addnewcomponent1" class="row g-3" onsubmit="return false">
+          {% csrf_token %}
+          <div class="col-12">
+            <label class="form-label w-100" for="modalAddCard">Village Name</label>
+            <div class="input-group input-group-merge">
+              <input id="village_name-modal" name="village_name" class="form-control credit-card-mask" type="text"
+                aria-describedby="modalAddCard2" autocomplete="off" required >
+              <span class="input-group-text cursor-pointer p-1" id="landuse_type"></span><span class="card-type"></span>
+            </div>
+          </div>
+        
+          <div class="col-12">
+            <label class="form-label w-100" for="modalAddCard">Surveyno From</label>
+            <div class="input-group input-group-merge">
+              <input id="surveyno_from-modal" name="surveyno_from" class="form-control credit-card-mask" type="text"
+                aria-describedby="modalAddCard2" autocomplete="off" required >
+              <span class="input-group-text cursor-pointer p-1" id="landuse_type"></span><span class="card-type"></span>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label w-100" for="modalAddCard">Surveyno To</label>
+            <div class="input-group input-group-merge">
+              <input id="surveyno_to-modal" name="surveyno_to" class="form-control credit-card-mask" type="text"
+                aria-describedby="modalAddCard2" autocomplete="off"  >
+              <span class="input-group-text cursor-pointer p-1" id="polygon_colour"></span><span class="card-type"></span>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label w-100" for="modalAddCard">LAnduse Type</label>
+            <div class="input-group input-group-merge">
+              <input id="landuse_type-modal" name="landuse_type" class="form-control credit-card-mask" type="text"
+                aria-describedby="modalAddCard2" autocomplete="off" required >
+              <span class="input-group-text cursor-pointer p-1" id="landuse_type"></span><span class="card-type"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="id_localbody_id"></label>
+            <input type="hidden" id="villagesurvey_id-modal" name="villagesurvey_id" class="form-control" required>
+          </div>
+        <div class="col-12 text-center mt-4">
+          <button type="submit" class="btn btn-primary me-sm-3 me-1">Save</button>
+          <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  function editVillageasurvery(villagesurvey_id, village_name, landuse_type,surveyno_from,surveyno_to){
+    $('#addNewCCModal1').modal("show");
+    $("#village_name-modal").val(village_name);
+  
+    $("#surveyno_from-modal").val(surveyno_from);
+    $("#surveyno_to-modal").val(surveyno_to);
+    $("#landuse_type-modal").val(landuse_type);
+    $("#villagesurvey_id-modal").val(villagesurvey_id);
+    console.log(villagesurvey_id,village_name,surveyno_from,surveyno_to,landuse_type)
+    $('form#addnewcomponent1').submit(function (e) {
+      e.preventDefault();
+      console.log(" call8ng addnewcomponent")
+      var empty = true;
+
+      var village_name = $('#village_name-modal').val();
+      console.log("village_name",village_name)
+      
+      var surveyno_from = $('#surveyno_from-modal').val();
+      console.log("surveyno_from",surveyno_from)
+      var surveyno_to = $('#surveyno_to-modal').val();
+      var landuse_type = $('#landuse_type-modal').val();
+      console.log("landuse_type",landuse_type)
+      var villagesurvey_id = $('#villagesurvey_id-modal').val();
+      
+      console.log("villagesurvey_id",villagesurvey_id)
+    $.ajax({
+      
+      url: '/edit_villagesurvery/' + villagesurvey_id + '/',  
+      method: 'post',
+      data: {
+          villagesurvey_id:villagesurvey_id,
+          village_name: village_name,
+         
+          surveyno_from:surveyno_from,
+          surveyno_to: surveyno_to,
+          landuse_type: landuse_type,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+    dataType: 'json',
+    success: function (data) {
+        if (data.status) {
+            sweet_alert_message('success', data.message);
+        }  else {
+          sweet_alert_message('success', data.message);
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000); 
+        }
+    }
+  })
+})
+}
+
+    function sweet_alert_message(icons, message) {
+    if (icons == "success") {
+      title1 = "Good job!"
+    } else if (icons == "info") {
+      title1 == "Info!"
+    } else if (icons == "warning") {
+      title1 = "Warning!"
+    } else {
+      title1 = "Error!"
+    }
+    Swal.fire({
+      title: title1,
+      text: message,
+      icon: icons,
+      customClass: {
+        confirmButton: 'btn btn-primary'
+      },
+      buttonsStyling: false
+    });
+   }
+
+   $('#addnewcomponent').submit(function(event) {
+    event.preventDefault();
+    var village_name = $('#village_name').val();
+    console.log("village_name",village_name)
+    var surveyno_from = $('#surveyno_from').val();
+    console.log("surveyno_from",surveyno_from)
+    var surveyno_to = $('#surveyno_to').val();
+    console.log("surveyno_from",surveyno_from)
+    var landuse_type = $('#landuse_type').val();
+    console.log("landuse_type",landuse_type)
+
+    $.ajax({
+        type: 'POST',
+        url: '/add_villagesurvery/',
+        data: {
+            'village_name': village_name,
+            'surveyno_from': surveyno_from,
+            'surveyno_to': surveyno_to,
+            'landuse_type': landuse_type,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function (data) {
+            if (data.success) {
+                sweet_alert_message('success', data.message);
+            } else {
+                sweet_alert_message('error', data.message);
+            }
+            setTimeout(function() {
+                window.location.reload();
+            }, 1000);
+        },
+        error: function (xhr, errmsg, err) {
+            // For debugging purposes, log the error in the console
+            console.log(xhr.status + ": " + xhr.responseText);
+            // Optionally, you can display an error message to the user
+            sweet_alert_message('error', 'An error occurred while processing your request.');
+        }
+    });
+});
+
+</script>
+
+                
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- districts.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Districts Dropdown</title>
+</head>
+<body>
+
+    <select name="district" id="districtSelect">
+      
+        {% for data in district %}
+            <option value="{{ data.id }}">{{ data.district }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <ul id="districtList">
+        <!-- Data will be displayed here -->
+    </ul>
+
+    <script>
+        $('#districtSelect').change(function() {
+            var districtId = $(this).val();
+            var district = $(this)
+            $.ajax({
+                url: '/show_districts/',  // Replace with your Django URL
+                type: 'GET',
+                data: {
+                    'district_id': districtId,
+                    'district':district
+                },
+                success: function(data) {
+                    $('#districtList').empty();
+                    data.forEach(function(item) {
+                        $('#districtList').append('<li>' + district.district + '</li>');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
